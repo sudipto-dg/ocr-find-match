@@ -10,7 +10,10 @@ SEARCH_TERM = "বাংলা"
 
 # Path to tesseract executable (adjust if needed)
 # Example for Windows:
-# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+# Path to poppler executable (adjust if needed)
+poppler_path = r"C:\Users\shovo\Downloads\poppler-25.12.0\Library\bin"
 
 def normalize(text):
     """Normalize Unicode and collapse spaces."""
@@ -41,7 +44,7 @@ def search_pdf(pdf_path):
     # Step 2: OCR fallback if nothing found
     if not found:
         try:
-            images = convert_from_path(pdf_path, dpi=200)
+            images = convert_from_path(pdf_path, dpi=200, poppler_path=poppler_path)
             for page_num, img in enumerate(images, start=1):
                 text = pytesseract.image_to_string(img, lang="ben")
                 norm_text = normalize(text)
